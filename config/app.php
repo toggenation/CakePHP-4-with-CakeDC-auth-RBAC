@@ -8,6 +8,10 @@ use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
 return [
+    'ROLES' => [
+        'admin' => "Administrator (access all)",
+        'user' => "User (View only and edit / delete own posts)"
+    ],
     /*
      * Debug Level:
      *

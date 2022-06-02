@@ -56,10 +56,10 @@ class UsersTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->boolean('is_superuser')
-            ->requirePresence('is_superuser', 'create')
-            ->notEmptyString('is_superuser');
+        // $validator
+        //     ->boolean('is_superuser')
+        //     ->requirePresence('is_superuser', 'create')
+        //     ->notEmptyString('is_superuser');
 
         $validator
             ->scalar('username')

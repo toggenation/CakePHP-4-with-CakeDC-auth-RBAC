@@ -79,7 +79,11 @@ class PostsController extends AppController
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
+            $post = $this->Posts->patchEntity($post, $this->request->getData(), [
+                // Added: Don't allow user to POST a modification of user_id.
+                'accessibleFields' => ['user_id' => false]
+            ]);
+            
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
 

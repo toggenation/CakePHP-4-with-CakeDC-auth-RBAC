@@ -23,7 +23,7 @@ class AddTables extends AbstractMigration
             ->create();
 
         $this->table('users')
-            ->addColumn('is_superuser', 'boolean')
+            ->addColumn('is_superuser', 'boolean', ['default' => false])
             ->addColumn('username', 'string')
             ->addColumn('password', 'string')
             ->addColumn('role', 'string')

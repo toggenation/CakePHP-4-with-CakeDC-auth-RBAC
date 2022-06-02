@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Core\Configure;
+
 /**
  * Users Controller
  *
@@ -96,12 +98,15 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                
+                // redirect to posts/index
+                return $this->redirect('/');
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+
+        $roles = Configure::read("ROLES");
+        $this->set(compact('user', 'roles'));
     }
 
     /**
@@ -117,7 +122,10 @@ class UsersController extends AppController
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user = $this->Users->patchEntity($user, $this->request->getData(), [
+                // Added: Disable modification of user_id.
+                'accessibleFields' => ['user_id' => false]
+            ]);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -125,7 +133,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+        $roles = Configure::read("ROLES");
+        $this->set(compact('user', 'roles'));
     }
 
     /**

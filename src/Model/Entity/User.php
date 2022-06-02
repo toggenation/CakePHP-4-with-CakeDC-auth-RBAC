@@ -29,7 +29,8 @@ class User extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'is_superuser' => true,
+        // don't allow mass assign
+        // 'is_superuser' => true,
         'username' => true,
         'password' => true,
         'role' => true,

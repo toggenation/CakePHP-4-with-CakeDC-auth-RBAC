@@ -13,7 +13,7 @@ return [
         [
             'role' => 'user',
             'controller' => 'Posts',
-            'action' => ['index', 'view']
+            'action' => ['index', 'view', 'add']
         ],
         [
             'role' => 'user',
