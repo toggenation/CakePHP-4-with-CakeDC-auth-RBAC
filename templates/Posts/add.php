@@ -18,8 +18,8 @@
             <fieldset>
                 <legend><?= __('Add Post') ?></legend>
                 <?php
-                    echo $this->Form->control('body');
                     echo $this->Form->control('title');
+                    echo $this->Form->control('body');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
