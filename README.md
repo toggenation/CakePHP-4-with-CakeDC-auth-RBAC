@@ -29,12 +29,12 @@ Very useful information in CakePHP Tutorials
 
 ## Features
 - Use of `RequestAthorizationMiddleware`
-- `src\Middleware\UnauthorizedHandler\RedirectWhenDenied.php` custom redirect & Flash Message
+- `src\Middleware\UnauthorizedHandler\RedirectWhenDenied.php` Unauthorized handler with redirect to referring page & Flash Message to inform user.
 - Example of use of Owner Rule (`vendor\cakedc\auth\src\Rbac\Rules\Owner.php`)
 - `src\Policy\AllowDebugKitPolicy.php` Allow DebutKit to work
 - RBAC configuration in `config/permissions.php`
 - CakeDC/Auth RBAC Policy & Redirect configuration `src/Application.php`
-
+- `MyTestMiddleware` - me playing with Middleware
 
 
 

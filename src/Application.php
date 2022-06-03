@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Middleware\MyTestMiddleware;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\Http\ServerRequest;
@@ -138,6 +139,8 @@ class Application extends BaseApplication implements
                     'statusCode' => 302,
                 ]
             ]))
+
+            ->add(new MyTestMiddleware())
 
             ->add(new RequestAuthorizationMiddleware())
 
