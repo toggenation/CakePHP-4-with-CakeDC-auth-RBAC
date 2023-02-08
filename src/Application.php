@@ -52,6 +52,7 @@ use Authorization\AuthorizationServiceProviderInterface;
 use App\Middleware\UnauthorizedHandler\RedirectWhenDenied;
 use App\Policy\AllowDebugKitPolicy;
 use Authentication\AuthenticationServiceProviderInterface;
+use Authorization\Exception\MissingIdentityException;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Authorization\Middleware\UnauthorizedHandler\ExceptionHandler;
 
@@ -128,12 +129,18 @@ class Application extends BaseApplication implements
                 'unauthorizedHandler' => [
                     'className' => RedirectWhenDenied::class,
                     'exceptions' => [
-                        ForbiddenException::class
+                        ForbiddenException::class,
                         // MissingIdentityException::class,
                     ],
                     'url' => [
                         'controller' => 'Users',
                         'action' => 'login',
+                    ],
+                    // this is where to redirect when logged in 
+                    // but there is no referer
+                    'noRefererRedirect' => [
+                        'controller' => 'Posts',
+                        'action' => 'index'
                     ],
                     'queryParam' => 'redirect',
                     'statusCode' => 302,

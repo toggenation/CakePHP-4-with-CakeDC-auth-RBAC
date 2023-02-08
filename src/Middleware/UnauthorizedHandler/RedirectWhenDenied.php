@@ -3,16 +3,16 @@
 namespace App\Middleware\UnauthorizedHandler;
 
 use Cake\Http\Response;
-use Cake\Http\FlashMessage;
 use Authorization\Exception\Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Authorization\Middleware\UnauthorizedHandler\CakeRedirectHandler;
+use Cake\Routing\Router;
 
 class RedirectWhenDenied extends CakeRedirectHandler
 {
 
-      /**
+    /**
      * {@inheritDoc}
      *
      * Return a response with a location header set if an exception matches.
@@ -27,30 +27,51 @@ class RedirectWhenDenied extends CakeRedirectHandler
         if (!$this->checkException($exception, $options['exceptions'])) {
             throw $exception;
         }
-   
-        if($request->getAttribute('identity') === null) {
+
+        /**
+         * @var \Cake\Http\ServerRequest $request
+         */
+
+        if ($request->getAttribute('identity') === null) {
+            // stop appending ?redirect=/controller/action
+            $options['queryParam'] = null;
+
+            // if not logged in redirect to /users/login
             $url = $this->getUrl($request, $options);
+
+            $flashMessage = "You need to be logged in to access that location";
         } else {
-            /**
-             * @var ServerRequest $request
-             */
-            $referer = $request->referer(false);
+            $url = $request->referer(false) ?? Router::url($options['noRefererRedirect']);
 
-            if($referer !== null) {
-                (new FlashMessage($request->getSession()))->error(
-                    "You do not have access to that"
-                );
-
-                $url = $referer;
-            }
+            $flashMessage = "You don't have access to {$request->getPath()}";
         }
-        
 
-        $response = new Response();
+        $request->getFlash()->error($flashMessage);
 
-        return $response
-            ->withHeader('Location', $url)
-            ->withStatus($options['statusCode']);
+        return (new Response())
+            ->withStatus($options['statusCode'])
+            ->withHeader('Location', $url);
     }
 
+    /**
+     * @inheritDoc
+     */
+    protected function getUrl(ServerRequestInterface $request, array $options): string
+    {
+        $url = $options['url'];
+
+        if ($options['queryParam'] !== null) {
+            $uri = $request->getUri();
+            $redirect = $uri->getPath();
+            if ($uri->getQuery()) {
+                $redirect .= '?' . $uri->getQuery();
+            }
+
+            $url['?'][$options['queryParam']] = $redirect;
+
+            $url['?']['seen'] = 1;
+        }
+
+        return Router::url($url);
+    }
 }
