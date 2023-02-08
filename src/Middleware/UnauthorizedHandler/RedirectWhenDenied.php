@@ -52,26 +52,4 @@ class RedirectWhenDenied extends CakeRedirectHandler
             ->withStatus($options['statusCode'])
             ->withHeader('Location', $url);
     }
-
-    /**
-     * @inheritDoc
-     */
-    protected function getUrl(ServerRequestInterface $request, array $options): string
-    {
-        $url = $options['url'];
-
-        if ($options['queryParam'] !== null) {
-            $uri = $request->getUri();
-            $redirect = $uri->getPath();
-            if ($uri->getQuery()) {
-                $redirect .= '?' . $uri->getQuery();
-            }
-
-            $url['?'][$options['queryParam']] = $redirect;
-
-            $url['?']['seen'] = 1;
-        }
-
-        return Router::url($url);
-    }
 }
