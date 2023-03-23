@@ -25,23 +25,23 @@ class PostsSeed extends AbstractSeed
             [
                 'title' => 'Admin User Title 1',
                 'body' => 'Admin User Body 1',
-                'user_id' => 1
+                'another_user_id' => 1
             ],
             [
                 'title' => 'User Title 1',
                 'body' => 'User Body 2',
-                'user_id' => 2
+                'another_user_id' => 2
             ],
             [
                 'title' => 'Admin User Title 2',
                 'body' => 'Admin User Body 2',
-                'user_id' => 1
+                'another_user_id' => 1
             ],
 
             [
                 'title' => 'User Title 2',
                 'body' => 'User Body 2',
-                'user_id' => 2
+                'another_user_id' => 2
             ]
         ];
 

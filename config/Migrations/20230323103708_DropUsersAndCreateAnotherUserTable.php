@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class AddTables extends AbstractMigration
+class DropUsersAndCreateAnotherUserTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -13,20 +13,20 @@ class AddTables extends AbstractMigration
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
      * @return void
      */
-    public function change()
+    public function change(): void
     {
-        $this->table('posts')
-            ->addColumn('body', 'string')
-            ->addColumn('title', 'string')
-            ->addColumn('another_user_id', 'integer')
-            ->addTimestamps('created', 'modified')
-            ->create();
+        $table = $this->table('users');
+        $table->drop()->save();
 
-        $this->table('users')
+        $this->table('another_users')
             ->addColumn('is_superuser', 'boolean', ['default' => false])
             ->addColumn('username', 'string')
             ->addColumn('password', 'string')
             ->addColumn('role', 'string')
             ->create();
+
+        $this->table('posts')
+            ->renameColumn('user_id', 'another_user_id')
+            ->update();
     }
 }

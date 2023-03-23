@@ -37,7 +37,7 @@ class UsersSeed extends AbstractSeed
             ]
         ];
 
-        $table = $this->table('users');
+        $table = $this->table('another_users');
 
         $table->truncate();
 

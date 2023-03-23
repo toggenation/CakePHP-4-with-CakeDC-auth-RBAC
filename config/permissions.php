@@ -19,7 +19,7 @@ return [
             'role' => 'user',
             'controller' => 'Posts',
             'action' => ['edit', 'delete'],
-            'allowed' => new Owner
+            'allowed' => new Owner(['ownerForeignKey' => 'another_user_id'])
         ],
         [
             'role' => 'admin',

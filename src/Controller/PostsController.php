@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -19,7 +20,7 @@ class PostsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users'],
+            'contain' => ['AnotherUsers'],
         ];
         $posts = $this->paginate($this->Posts);
 
@@ -36,7 +37,7 @@ class PostsController extends AppController
     public function view($id = null)
     {
         $post = $this->Posts->get($id, [
-            'contain' => ['Users'],
+            'contain' => ['AnotherUsers'],
         ]);
 
         $this->set(compact('post'));
@@ -51,18 +52,22 @@ class PostsController extends AppController
     {
         $post = $this->Posts->newEmptyEntity();
         if ($this->request->is('post')) {
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
-            
-            $post->user_id = $this->request->getAttribute('identity')->getIdentifier();
+            $post = $this->Posts->patchEntity($post, $this->request->getData(), [
+                // Added: Don't allow user to POST a modification of user_id.
+                'accessibleFields' => ['another_user_id' => false]
+            ]);
+
+            $post->another_user_id = $this->request->getAttribute('identity')->getIdentifier();
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
+            // dd($post->getErrors());
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        $users = $this->Posts->Users->find('list', ['limit' => 200])->all();
+        $users = $this->Posts->AnotherUsers->find('list', ['limit' => 200])->all();
         $this->set(compact('post', 'users'));
     }
 
@@ -81,9 +86,9 @@ class PostsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->Posts->patchEntity($post, $this->request->getData(), [
                 // Added: Don't allow user to POST a modification of user_id.
-                'accessibleFields' => ['user_id' => false]
+                'accessibleFields' => ['another_user_id' => false]
             ]);
-            
+
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
 
@@ -91,7 +96,7 @@ class PostsController extends AppController
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        $users = $this->Posts->Users->find('list', ['limit' => 200])->all();
+        $users = $this->Posts->AnotherUsers->find('list', ['limit' => 200])->all();
         $this->set(compact('post', 'users'));
     }
 

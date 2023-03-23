@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -47,8 +48,8 @@ class PostsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
+        $this->belongsTo('AnotherUsers', [
+            'foreignKey' => 'another_user_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -74,9 +75,9 @@ class PostsTable extends Table
             ->notEmptyString('title');
 
         $validator
-            ->integer('user_id')
-            ->requirePresence('user_id', 'create')
-            ->notEmptyString('user_id');
+            ->integer('another_user_id')
+            ->requirePresence('another_user_id', 'create')
+            ->notEmptyString('another_user_id');
 
         return $validator;
     }
@@ -90,7 +91,7 @@ class PostsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('user_id', 'Users'), ['errorField' => 'user_id']);
+        $rules->add($rules->existsIn('another_user_id', 'AnotherUsers'), ['errorField' => 'another_user_id']);
 
         return $rules;
     }
