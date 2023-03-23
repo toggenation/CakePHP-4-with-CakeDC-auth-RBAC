@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -40,11 +41,11 @@ class AnotherUsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('another_users');
-        $this->setDisplayField('id');
+        $this->setDisplayField('username');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Posts', [
-            'foreignKey' => 'another_user_id',
+            'foreignKey' => 'user_id',
         ]);
     }
 

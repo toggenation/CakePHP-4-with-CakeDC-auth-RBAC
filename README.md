@@ -1,4 +1,4 @@
-# CakePHP 4 with CakeDC/auth RBAC
+# CakePHP 4 with CakeDC/auth RBAC (new_users branch)
 
 This is an implementation example of Role Based Access Control with `vendor\cakephp\authorization\src\Middleware\UnauthorizedHandler\CakeRedirectHandler.php` extended to 
 1. Handle the `ForbiddenException` 

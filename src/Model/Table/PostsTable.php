@@ -49,7 +49,7 @@ class PostsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('AnotherUsers', [
-            'foreignKey' => 'another_user_id',
+            'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -75,9 +75,9 @@ class PostsTable extends Table
             ->notEmptyString('title');
 
         $validator
-            ->integer('another_user_id')
-            ->requirePresence('another_user_id', 'create')
-            ->notEmptyString('another_user_id');
+            ->integer('user_id')
+            ->requirePresence('user_id', 'create')
+            ->notEmptyString('user_id');
 
         return $validator;
     }
@@ -91,7 +91,7 @@ class PostsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('another_user_id', 'AnotherUsers'), ['errorField' => 'another_user_id']);
+        $rules->add($rules->existsIn('user_id', 'AnotherUsers'), ['errorField' => 'user_id']);
 
         return $rules;
     }

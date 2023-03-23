@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Post[]|\Cake\Collection\CollectionInterface $posts
@@ -21,20 +22,20 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($posts as $post): ?>
-                <tr>
-                    <td><?= $this->Number->format($post->id) ?></td>
-                    <td><?= h($post->title) ?></td>
-                    <td><?= h($post->body) ?></td>
-                    <td><?= $post->has('user') ? $this->Html->link($post->user->username, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?></td>
-                    <td><?= h($post->created) ?></td>
-                    <td><?= h($post->modified) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $post->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $post->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?>
-                    </td>
-                </tr>
+                <?php foreach ($posts as $post) : ?>
+                    <tr>
+                        <td><?= $this->Number->format($post->id) ?></td>
+                        <td><?= h($post->title) ?></td>
+                        <td><?= h($post->body) ?></td>
+                        <td><?= $post->has('another_user') ? $this->Html->link($post->another_user->username, ['controller' => 'AnotherUsers', 'action' => 'view', $post->another_user->id]) : '' ?></td>
+                        <td><?= h($post->created) ?></td>
+                        <td><?= h($post->modified) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $post->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $post->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

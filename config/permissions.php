@@ -10,6 +10,12 @@ return [
             'action' => ['add', 'login', 'logout'],
             'bypassAuth' => true
         ],
+
+        [
+            'role' => 'user',
+            'controller' => 'AnotherUsers',
+            'action' => ['index', 'view']
+        ],
         [
             'role' => 'user',
             'controller' => 'Posts',
@@ -19,7 +25,7 @@ return [
             'role' => 'user',
             'controller' => 'Posts',
             'action' => ['edit', 'delete'],
-            'allowed' => new Owner(['ownerForeignKey' => 'another_user_id'])
+            'allowed' => new Owner()
         ],
         [
             'role' => 'admin',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\AnotherUser $anotherUser
@@ -38,34 +39,34 @@
             <div class="related">
                 <h4><?= __('Related Posts') ?></h4>
                 <?php if (!empty($anotherUser->posts)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Body') ?></th>
-                            <th><?= __('Title') ?></th>
-                            <th><?= __('Another User Id') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($anotherUser->posts as $posts) : ?>
-                        <tr>
-                            <td><?= h($posts->id) ?></td>
-                            <td><?= h($posts->body) ?></td>
-                            <td><?= h($posts->title) ?></td>
-                            <td><?= h($posts->another_user_id) ?></td>
-                            <td><?= h($posts->created) ?></td>
-                            <td><?= h($posts->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Posts', 'action' => 'view', $posts->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Posts', 'action' => 'edit', $posts->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Posts', 'action' => 'delete', $posts->id], ['confirm' => __('Are you sure you want to delete # {0}?', $posts->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Body') ?></th>
+                                <th><?= __('Title') ?></th>
+                                <th><?= __('Another User Id') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($anotherUser->posts as $posts) : ?>
+                                <tr>
+                                    <td><?= h($posts->id) ?></td>
+                                    <td><?= h($posts->body) ?></td>
+                                    <td><?= h($posts->title) ?></td>
+                                    <td><?= h($posts->user_id) ?></td>
+                                    <td><?= h($posts->created) ?></td>
+                                    <td><?= h($posts->modified) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'Posts', 'action' => 'view', $posts->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'Posts', 'action' => 'edit', $posts->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Posts', 'action' => 'delete', $posts->id], ['confirm' => __('Are you sure you want to delete # {0}?', $posts->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
