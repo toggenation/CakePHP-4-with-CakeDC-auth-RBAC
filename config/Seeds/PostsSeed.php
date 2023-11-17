@@ -19,7 +19,7 @@ class PostsSeed extends AbstractSeed
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $data = [
             [
@@ -46,7 +46,7 @@ class PostsSeed extends AbstractSeed
         ];
 
         $table = $this->table('posts');
-        
+
         $table->truncate();
 
         $table->insert($data)->save();

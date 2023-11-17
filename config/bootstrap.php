@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -37,8 +38,8 @@ use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Database\Type\StringType;
 use Cake\Database\TypeFactory;
 use Cake\Datasource\ConnectionManager;
-use Cake\Error\ConsoleErrorHandler;
-use Cake\Error\ErrorHandler;
+use Cake\Error\ErrorTrap;
+use Cake\Error\ExceptionTrap;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
@@ -76,6 +77,7 @@ use Cake\Utility\Security;
  * idea to create multiple configuration files, and separate the configuration
  * that changes from configuration that does not. This makes deployment simpler.
  */
+
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
@@ -123,11 +125,15 @@ ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
  * Register application error and exception handlers.
  */
 $isCli = PHP_SAPI === 'cli';
-if ($isCli) {
-    (new ConsoleErrorHandler(Configure::read('Error')))->register();
-} else {
-    (new ErrorHandler(Configure::read('Error')))->register();
-}
+// if ($isCli) {
+//     (new ConsoleErrorHandler(Configure::read('Error')))->register();
+// } else {
+//     (new ErrorHandler(Configure::read('Error')))->register();
+// }
+
+
+(new ErrorTrap(Configure::read('Error')))->register();
+(new ExceptionTrap(Configure::read('Error')))->register();
 
 /*
  * Include the CLI bootstrap overrides.
