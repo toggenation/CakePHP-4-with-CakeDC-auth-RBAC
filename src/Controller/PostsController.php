@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -18,10 +19,11 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users'],
-        ];
-        $posts = $this->paginate($this->Posts);
+
+        $query = $this->Posts->find()
+            ->contain(['Users']);
+
+        $posts = $this->paginate($query);
 
         $this->set(compact('posts'));
     }
@@ -35,9 +37,7 @@ class PostsController extends AppController
      */
     public function view($id = null)
     {
-        $post = $this->Posts->get($id, [
-            'contain' => ['Users'],
-        ]);
+        $post = $this->Posts->get($id, contain: ['Users']);
 
         $this->set(compact('post'));
     }
@@ -52,7 +52,7 @@ class PostsController extends AppController
         $post = $this->Posts->newEmptyEntity();
         if ($this->request->is('post')) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
-            
+
             $post->user_id = $this->request->getAttribute('identity')->getIdentifier();
 
             if ($this->Posts->save($post)) {
@@ -75,15 +75,13 @@ class PostsController extends AppController
      */
     public function edit($id = null)
     {
-        $post = $this->Posts->get($id, [
-            'contain' => [],
-        ]);
+        $post = $this->Posts->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->Posts->patchEntity($post, $this->request->getData(), [
                 // Added: Don't allow user to POST a modification of user_id.
                 'accessibleFields' => ['user_id' => false]
             ]);
-            
+
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
 

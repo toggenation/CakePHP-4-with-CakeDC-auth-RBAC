@@ -28,7 +28,7 @@ class User extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         // don't allow mass assign
         // 'is_superuser' => true,
         'username' => true,
@@ -42,7 +42,7 @@ class User extends Entity
      *
      * @var array<string>
      */
-    protected $_hidden = [
+    protected array $_hidden = [
         'password',
     ];
 

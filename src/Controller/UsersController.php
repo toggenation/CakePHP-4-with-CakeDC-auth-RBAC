@@ -79,9 +79,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Posts'],
-        ]);
+        $user = $this->Users->get($id, contain: ['Posts']);
 
         $this->set(compact('user'));
     }
@@ -118,9 +116,7 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => [],
-        ]);
+        $user = $this->Users->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData(), [
                 // Added: Disable modification of user_id.

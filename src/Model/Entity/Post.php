@@ -12,8 +12,8 @@ use Cake\ORM\Entity;
  * @property string $body
  * @property string $title
  * @property int $user_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property \Cake\I18n\DateTime $created
+ * @property \Cake\I18n\DateTime|null $modified
  *
  * @property \App\Model\Entity\User $user
  */
@@ -28,7 +28,7 @@ class Post extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'body' => true,
         'title' => true,
         'user_id' => true,
