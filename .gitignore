@@ -24,6 +24,7 @@ Thumbs.db
 #######################
 # PHPUnit
 .phpunit.result.cache
+/.phpunit.cache/*
 tests.sqlite
 # vim
 *~
@@ -52,3 +53,4 @@ nbproject/*
 yarn-debug.log
 yarn-error.log
 live.sqlite
+.phpunit.cache/test-results

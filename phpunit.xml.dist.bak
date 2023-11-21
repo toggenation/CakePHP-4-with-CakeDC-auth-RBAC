@@ -14,7 +14,7 @@
   </testsuites>
   <!-- Load extension for fixtures -->
   <extensions>
-    <bootstrap class="\Cake\TestSuite\Fixture\Extension\PHPUnitExtension"/>
+    <extension class="Cake\TestSuite\Fixture\Extension\PHPUnitExtension"/>
   </extensions>
   <!-- Ignore vendor tests in code coverage reports -->
   <source>
