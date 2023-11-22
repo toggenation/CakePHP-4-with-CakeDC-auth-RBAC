@@ -4,7 +4,7 @@ namespace App\Test\Utils;
 
 use Cake\ORM\Locator\LocatorAwareTrait;
 
-trait Auth
+trait AuthForTests
 {
     use LocatorAwareTrait;
 
@@ -25,7 +25,7 @@ trait Auth
         $user = $users->find()
             ->where(['username' => $userName])
             ->firstOrFail();
-        // dd($user);
+
         $this->session(['Auth' => $user]);
     }
 }

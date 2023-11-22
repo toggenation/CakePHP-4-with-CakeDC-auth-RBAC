@@ -188,6 +188,10 @@ class Application extends BaseApplication implements
         $this->addOptionalPlugin('Cake/Repl');
         $this->addOptionalPlugin('Bake');
 
+        if (Configure::read('debug')) {
+            $this->addPlugin('CakephpFixtureFactories');
+        }
+
         $this->addPlugin('Migrations');
 
         // Load more plugins here

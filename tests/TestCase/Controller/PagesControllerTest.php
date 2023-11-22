@@ -18,11 +18,14 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use App\Test\Utils\Auth;
+use App\Test\Factory\UserFactory;
+use App\Test\Fixture\UsersFixture;
+use App\Test\Utils\AuthForTests;
 use Cake\Core\Configure;
 use Cake\TestSuite\Constraint\Response\StatusCode;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 
 /**
  * PagesControllerTest class
@@ -32,15 +35,20 @@ use Cake\TestSuite\TestCase;
 class PagesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
-    use Auth;
+    use AuthForTests;
+    use TruncateDirtyTables;
 
     public function setUp(): void
     {
-        $this->authenticateUser();
+        parent::setUp();
+
+        $user =  UserFactory::make(['username' => 'user'])->getEntity();
+
+        $this->session(['Auth' => $user]);
+
+        //->withPosts(null, 3)->persist();
+        // $this->authenticateUser('admin');
     }
-
-    protected array $fixtures = ['app.Users'];
-
 
     /**
      * testDisplay method
@@ -49,8 +57,8 @@ class PagesControllerTest extends TestCase
      */
     public function testDisplay()
     {
-
         Configure::write('debug', true);
+
         $this->get('/pages/home');
         $this->assertResponseOk();
         $this->assertResponseContains('CakePHP');
